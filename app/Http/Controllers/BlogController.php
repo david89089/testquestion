@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function category($id){
-        $category = Category::where('slug', $id)->first();
-        return view('blog.category', [
-            'category' => $category,
-            'articles' => $category->articles()->where('published', 1)->paginate(5)
+    public function index(){
+        $blogs = Blog::orderBy('created_at', 'desc')->get();
+        return view('blog.view', [
+            'blogs'=> $blogs
+        ]);
+    }
+
+    public function show(Blog $blog){
+        return view('blog.show', [
+            'blog'=> $blog
         ]);
     }
 }

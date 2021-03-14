@@ -13,16 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/', [App\Http\Controllers\BlogController::class, 'index'])->name('home');
+Route::get('/blog/{blog}', [App\Http\Controllers\BlogController::class, 'show'])->name('show');
+Auth::routes();
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['role:admin'])->prefix('admin_panel')->group(function () {
+    Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+    Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('blog', \App\Http\Controllers\Admin\BlogController::class);
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/blog/category/{}', 'BlogController@category')->name('category');
