@@ -43,6 +43,11 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+        ]);
+
         $new_blog = new Blog();
         $new_blog->title = $request->title;
         $new_blog->text = $request->text;
@@ -88,6 +93,11 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
+        $validated = $request->validate([
+            'title' => 'required',
+            'text' => 'required'
+        ]);
+
         $blog->title = $request->title;
         $blog->text = $request->text;
         $blog->save();

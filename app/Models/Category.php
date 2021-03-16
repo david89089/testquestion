@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    protected $fillable = ['title'];
+
+    protected $guarded = ['id'];
+
+    public $timestamps = false;
+
     use HasFactory;
 }
